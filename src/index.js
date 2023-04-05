@@ -1,6 +1,7 @@
 import './sass/index.scss';
 import axios from "axios";
-const fs = require('fs');
+import SimpleLightbox from "simplelightbox";
+import "simplelightbox/dist/simple-lightbox.min.css";
 //const axios = require('axios').default;
 
 

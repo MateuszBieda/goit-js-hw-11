@@ -1,29 +1,92 @@
-.example {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
-    Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+// .example {
+//   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen,
+//     Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+//   line-height: 1.5;
+//   background-color: #fff;
+//   color: #2f2f37;
+//   max-width: 960px;
+//   padding: 16px;
+// }
+
+// .example code {
+//   font-family: monospace;
+//   font-size: 16px;
+//   font-weight: 700;
+//   background-color: #ff6b0a;
+//   color: #fff;
+//   padding: 2px 6px;
+//   border-radius: 2px;
+// }
+
+// .example .background {
+//   height: 240px;
+//   ❗️❗️❗️ The path to images from a SASS file
+//   is always the same as from the css folder.
+//   background-image: url('../images/logo.png');
+//   background-size: cover;
+//   background-position: center;
+// }
+
+
+* {
+  box-sizing: border-box;
+}
+
+body{
+  background-color:#fafafa;
+}
+.container{
+  max-width: 1200px;
+  padding:  15px;
+  margin:0 auto;
+  width: 100%;
+}
+
+.gallery{
+ padding: 20px;
+ display: grid;
+ max-width: 1140px;
+ grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+ //grid-auto-rows: 240px;
+ column-gap: 15px;
+ row-gap: 1.5em;
+ justify-content: center;
+ margin-left: auto;
+ margin-right: auto;
+}
+
+
+ img {
+  object-fit: cover;
+  width: 100%;
+  height: 150px;
+ }
+
+.photo-card{
+  border: 1px solid rgba(45, 92, 93, 0.171);
+
+}
+.info{
+display: flex;
+align-items: center;
+justify-content: space-evenly;
+
+}
+
+.info-item{
+
+  display: flex;
+  flex-wrap: wrap;
+  flex-direction: column;
+  align-items: stretch;
+  font-size: 10px; 
   line-height: 1.5;
-  background-color: #fff;
-  color: #2f2f37;
-  max-width: 960px;
-  padding: 16px;
+  margin: auto;
+  padding: 5px;
+  
 }
 
-.example code {
-  font-family: monospace;
-  font-size: 16px;
-  font-weight: 700;
-  background-color: #ff6b0a;
-  color: #fff;
-  padding: 2px 6px;
-  border-radius: 2px;
-}
+.search-form {
+margin: auto;
 
-.example .background {
-  height: 240px;
-  // ❗️❗️❗️ The path to images from a SASS file
-  // is always the same as from the css folder.
-  background-image: url('../images/logo.png');
-  background-size: cover;
-  background-position: center;
 }
-
