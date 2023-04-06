@@ -26,6 +26,15 @@ let galleryList=  new SimpleLightbox('.photo-card a');
 
 const URL = `?key=${API_KEY}&q=${descrImage}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}&page=${page}`;
 
+
+// const { height: cardHeight } = document
+//   .querySelector(".gallery")
+//   .firstElementChild.getBoundingClientRect();
+
+// window.scrollBy({
+//   top: cardHeight * 2,
+//   behavior: "smooth",
+// });
 //form.addEventListener("submit", getImage());
 
 //button.addEventListener("click", getImage());
@@ -52,12 +61,19 @@ function handleSubmit(e){
 
     fetchGallery(descrImage, page, perPage)
     .then((response) => {
+        gallery.innerHTML='';
         console.log(response.data);
         renderImageList(response);
         const totalHits=response.data.totalHits;
         console.log(totalHits);
-        succesMessage(totalHits);
-        galleryList.refresh();
+        if(totalHits===0){
+            failureMessage();
+            gallery.innerHTML='';
+        }
+        if(totalHits>0){
+            succesMessage(totalHits);
+            galleryList.refresh();
+        }
         
     })
     .catch(error => console.log(error))
@@ -103,6 +119,10 @@ function handleSubmit(e){
     Notiflix.Notify.success(`Hooray! We found ${data} images.`);
   }
 
+  function failureMessage(data){
+    Notiflix.Notify.failure("Sorry, there are no images matching your search query. Please try again.");
+
+  }
   
 
 
