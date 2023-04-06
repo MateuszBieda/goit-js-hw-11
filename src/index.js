@@ -1,53 +1,79 @@
 import './sass/index.scss';
 import axios from "axios";
+import Notiflix from 'notiflix';
+
 import SimpleLightbox from "simplelightbox";
 import "simplelightbox/dist/simple-lightbox.min.css";
+import { fetchGallery } from './fetch.js';
 //const axios = require('axios').default;
 
 
-axios.defaults.baseURL = "https://pixabay.com/api/";
+
 const API_KEY = "35005985-6320445dd5945a516c4e799c6";
 //const axios = require('axios').default;
 const form = document.querySelector("#search-form");
 const input = document.querySelector("input[name='searchQuery']");
 const button = document.querySelector("button[type='submit']");
 const gallery = document.querySelector(".gallery");
+const loadMoreBtn = document.querySelector(".load-more");
+loadMoreBtn.hidden=true;
 let descrImage = "";
 let page = 1;
 const perPage = 40;
 const image = document.querySelector("img");
-//image.style.width='200';
-//gallery.style.height='200';
+let galleryList=  new SimpleLightbox('.photo-card a');
 
-const URL = `?key=${API_KEY}&q=${descrImage}&image_type=photo&orientation=horizontal&safesearch=true`;
+
+const URL = `?key=${API_KEY}&q=${descrImage}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}&page=${page}`;
 
 //form.addEventListener("submit", getImage());
 
-button.addEventListener("click", getImage());
+//button.addEventListener("click", getImage());
+form.addEventListener("submit", handleSubmit);
 
 
-function onInput (e){
+// function onInput (e){
+//     e.preventDefault();
+//     let page = 1;
+//     let descrImage = e.currentTarget.searchQuery.value.trim();
+//     gallery.innerHTML = '';
+//     return console.log(descrImage);
+// };
+
+function handleSubmit(e){
     e.preventDefault();
-    let descrImage = input.value.trim();
+    page=1;
+     const descrImage = e.currentTarget.searchQuery.value.trim();
+     gallery.innerHTML='';
+     const URL = `?key=${API_KEY}&q=${descrImage}&image_type=photo&orientation=horizontal&safesearch=true&per_page=${perPage}&page=${page}`;
     console.log(descrImage);
-};
+    console.log(URL);
 
-async function getImage() {
-    try {
-      const response = await axios.get(URL);     
-      console.log(response.data);
-      renderImageList(response)
-    } catch (error) {
-      console.error(error);
-    }
-  }
+
+    fetchGallery(descrImage, page, perPage)
+    .then((response) => {
+        console.log(response.data);
+        renderImageList(response);
+        const totalHits=response.data.totalHits;
+        console.log(totalHits);
+        succesMessage(totalHits);
+        galleryList.refresh();
+        
+    })
+    .catch(error => console.log(error))
+    .finally(() => {
+      form.reset();
+    });
+}
+
+
 
   function renderImageList(response){
 
     const markup = response.data.hits
     .map((key) => 
     `<div class="photo-card">
-    <img src="${key.webformatURL}" alt="${key.tags}" loading="lazy" /> 
+    <a class="gallery__link" href=${key.largeImageURL}><img src="${key.webformatURL}" alt="${key.tags}" loading="lazy" /> </a>
     <div class="info">
     <p class="info-item">
     <b>Likes</b>
@@ -71,10 +97,13 @@ async function getImage() {
    .join("");
     
    return gallery.insertAdjacentHTML('beforeend',markup);
-    
-
    }       
         
+   function succesMessage(data) {
+    Notiflix.Notify.success(`Hooray! We found ${data} images.`);
+  }
+
+  
 
 
 
