@@ -56,6 +56,9 @@ function handleSubmit(e){
             gallery.innerHTML='';
             loadMoreBtn.classList.add('is-hidden');
         }
+        if (totalHits<perPage){
+            loadMoreBtn.classList.add('is-hidden');
+        }
         // if(totalHits>perPage){
         //     loadMoreBtn.classList.remove('is-hidden');
         //     onLoadMoreBtn();
