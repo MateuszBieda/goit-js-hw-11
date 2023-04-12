@@ -145,7 +145,7 @@ function handleSubmit(e){
     page += 1;
     //galleryList.destroy();
     const descrImage = input.value.trim();
-     gallery.innerHTML='';
+    
     fetchGallery(descrImage, page, perPage)
       .then((response) => {
         console.log(response.data.hits);
